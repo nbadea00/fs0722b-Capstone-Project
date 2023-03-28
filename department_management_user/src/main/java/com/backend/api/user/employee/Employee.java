@@ -16,6 +16,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,9 +48,9 @@ public class Employee {
 	@Column(name = "credentials_id", nullable = false, unique = true)
 	private Long idCredentials;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.MERGE})
 	private Set<Role> roles;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.MERGE})
 	private Set<Skill> skills;
 }

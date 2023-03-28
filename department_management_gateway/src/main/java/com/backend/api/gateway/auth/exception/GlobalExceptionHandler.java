@@ -84,8 +84,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                WebRequest webRequest){
         ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
                 webRequest.getDescription(false));
+        
+        System.out.println(exception.getLocalizedMessage());
+        
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

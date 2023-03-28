@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.backend.api.user.exception.MyAPIException;
+import com.backend.api.user.exception.ResourceNotFoundException;
 import com.backend.api.user.role.ERole;
 import com.backend.api.user.role.Role;
 import com.backend.api.user.role.RoleService;
@@ -37,20 +38,27 @@ public class EmployeeService {
 		Set<Skill> skillList = skillService.gerListSkillFromListSkillName(args.getSkills());
 		args.setRoles(roleList);
 		args.setSkills(skillList);
+		
 		return repo.save(args);
 	}
 	
-	public Employee update(Employee args) {
-		return repo.save(args);
+	public Employee update(Employee args, Long id) {
+		if(id == null) throw new MyAPIException(HttpStatus.NOT_FOUND, "missing id");
+		repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id",  id));
+		if(repo.existsByTelephoneAndIdNot(args.getTelephone(), id)) throw new MyAPIException(HttpStatus.NOT_FOUND, "telephone number already used");
+		
+		args.setId(id);
+		return repo.saveAndFlush(args);
 	}
 	
 	public Employee findById(Long id) {
-		return repo.findById(id).orElseThrow();
+		return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id",  id));
 	}
 	
 	public String delById(Long id) {
+		repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id",  id));
 		repo.deleteById(id);
-		return "Skill remuved";
+		return "Employee remuved";
 	}
 	
 	public Page<Employee> findAll(int page, int dim) {

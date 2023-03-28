@@ -5,8 +5,6 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import com.backend.api.user.role.ERole;
-import com.backend.api.user.role.Role;
 
 @Component
 public class SkillRunner implements ApplicationRunner {
