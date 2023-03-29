@@ -36,6 +36,10 @@ public class DepartmentService {
 		return repo.findByName(name).orElseThrow(()-> new ResourceNotFoundException("Department", "name", name));
 	}
 	
+	public Department findByDepartmentHeadId(Long departmentHeadId) {
+		return repo.findByDepartmentHeadId(departmentHeadId).orElseThrow(()-> new ResourceNotFoundException("Department", "departmentHeadId", departmentHeadId.toString()));
+	}
+	
 	public Page<Department> findAll(int page, int dim) {
 		return repo.findAll(PageRequest.of(page, dim));
 	}

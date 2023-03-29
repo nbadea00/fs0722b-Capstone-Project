@@ -40,9 +40,9 @@ public class DepartmentServiceTest {
 	@Test
 	@Order(3)
 	public void updateIdDepartment() {
-		Department e = departmentService.findById(id);
-		e.setName("testNew");
-		departmentService.update(e, id);
+		Department d = departmentService.findById(id);
+		d.setName("testNew");
+		departmentService.update(d, id);
 		
 		assertTrue(departmentService.findById(id).getName().equals("testNew"));
 	}
