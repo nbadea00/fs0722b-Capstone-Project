@@ -56,4 +56,13 @@ public class WebClientConfig {
 				.build();
 	}
 	
+	@Bean(name = "webClientTaskApi")
+	WebClient webClientTask() {
+		return WebClient.builder()
+				.baseUrl("http://localhost:8083/api/tasks")
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8083/api/task"))
+				.build();
+	}
+	
 }
