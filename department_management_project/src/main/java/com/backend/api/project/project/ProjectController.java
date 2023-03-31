@@ -38,10 +38,12 @@ public class ProjectController {
 		return ResponseEntity.ok(projectService.delById(id));
 	}
 	
-	@PutMapping
-	public ResponseEntity<Project> putUser(@RequestBody Project project,
-			@RequestParam(name = "id") Long id){
-		return ResponseEntity.ok(projectService.update(project, id));
+	@PutMapping("/{idProject}")
+	public ResponseEntity<Project> putUser(
+			@RequestBody Project project,
+			@RequestParam(name = "id") Long idUser,
+			@PathVariable Long idProject){
+		return ResponseEntity.ok(projectService.update(project, idUser));
 	}
 	
 	@PostMapping

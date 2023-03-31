@@ -20,12 +20,21 @@ public class WebClientConfig {
 				.build();
 	}
 	
+	@Bean(name = "webClientTeamsApi")
+	WebClient webClientTeam() {
+		return WebClient.builder()
+				.baseUrl("http://localhost:8082/api/teams")
+				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8082/api/teams"))
+				.build();
+	}
+	
 	@Bean(name = "webClientSectionsApi")
 	WebClient webClientSection() {
 		return WebClient.builder()
 				.baseUrl("http://localhost:8082/api/sections")
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080/api/sections"))
+				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8082/api/sections"))
 				.build();
 	}
 	
@@ -34,16 +43,17 @@ public class WebClientConfig {
 		return WebClient.builder()
 				.baseUrl("http://localhost:8082/api/departments")
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080/api/departments"))
+				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8082/api/departments"))
 				.build();
 	}
 	
-	@Bean(name = "webClientTeamsApi")
-	WebClient webClientTeam() {
+	@Bean(name = "webClientProjectApi")
+	WebClient webClientProject() {
 		return WebClient.builder()
-				.baseUrl("http://localhost:8082/api/teams")
+				.baseUrl("http://localhost:8083/api/projects")
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080/api/teams"))
+				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8083/api/projects"))
 				.build();
 	}
+	
 }
