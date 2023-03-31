@@ -12,15 +12,15 @@ public class ProjectService {
 
 	@Autowired ProjectRepository repo;
 	
-	public Project save(Project project) {
+	public Project save(Project project, Long userId) {
 		return repo.save(project);
 	}
 	
-	public Project update(Project project) {
+	public Project update(Project project, Long userId) {
 		return repo.save(project);
 	}
 	
-	public Project findBuId(Long id) {
+	public Project findById(Long id) {
 		return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project", "id",  id));
 	}
 	
