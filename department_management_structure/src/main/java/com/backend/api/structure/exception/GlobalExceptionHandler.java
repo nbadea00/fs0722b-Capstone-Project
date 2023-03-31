@@ -15,7 +15,6 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,31 +26,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // handle specific exceptions
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException exception,
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException exception,
                                                                         WebRequest webRequest){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
-                webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
     
     @ExceptionHandler(EntityExistsException.class)
-    public ResponseEntity<ErrorDetails> manageEntityExistsException(EntityExistsException exception,
+    public ResponseEntity<String> manageEntityExistsException(EntityExistsException exception,
                                                                         WebRequest webRequest){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
-                webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.FOUND);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.FOUND);
     }
 
     @ExceptionHandler(MyAPIException.class)
-    public ResponseEntity<ErrorDetails> handleBlogAPIException(MyAPIException exception,
+    public ResponseEntity<String> handleBlogAPIException(MyAPIException exception,
                                                                         WebRequest webRequest){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
-                webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorDetails> handleConstraintViolationException(ConstraintViolationException exception,
+    public ResponseEntity<Set<String>> handleConstraintViolationException(ConstraintViolationException exception,
                                                                         WebRequest webRequest){
     	
     	Set<ConstraintViolation<?>> constraintViolations = exception.getConstraintViolations();
@@ -62,26 +55,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     	        .map(constraintViolation -> constraintViolation.getMessage())
     	        .collect(Collectors.toList()));
     	
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), messages.toString(),
-                webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(messages, HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorDetails> handleIllegalArgumentException(IllegalArgumentException exception,
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException exception,
                                                                         WebRequest webRequest){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), "Formato dei dati errato",
-                webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
     
     // global exceptions
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDetails> handleGlobalException(Exception exception,
+    public ResponseEntity<String> handleGlobalException(Exception exception,
                                                                WebRequest webRequest){
-        ErrorDetails errorDetails = new ErrorDetails(new Date(), exception.getMessage(),
-                webRequest.getDescription(false));
-        return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override

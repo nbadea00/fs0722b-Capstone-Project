@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import com.backend.api.gateway.auth.entity.User;
 import com.backend.api.gateway.auth.payload.RegisterDto;
@@ -18,6 +19,7 @@ import com.backend.api.gateway.auth.service.AuthService;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
+@TestPropertySource(locations="classpath:test.properties")
 public class RegisterTest {
 
 	@Autowired AuthService authService;

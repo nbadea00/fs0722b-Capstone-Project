@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 
 import com.backend.api.gateway.auth.payload.LoginDto;
 import com.backend.api.gateway.auth.service.AuthService;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
+@TestPropertySource(locations="classpath:test.properties")
 public class LoginTest {
 
 	@Autowired AuthService authService;

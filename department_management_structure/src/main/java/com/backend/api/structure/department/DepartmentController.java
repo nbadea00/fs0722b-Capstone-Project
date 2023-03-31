@@ -3,7 +3,6 @@ package com.backend.api.structure.department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api/departments")
 @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
-@RequestMapping("/api/structures")
 public class DepartmentController {
 
 	@Autowired DepartmentService departmentService;
@@ -34,15 +34,16 @@ public class DepartmentController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Department> postDepartment(
-			@RequestBody Department department,
-			@RequestParam(name = "departmentHeadId") Long departmentHeadId){
-		return ResponseEntity.ok(departmentService.save(department, departmentHeadId));
+	public ResponseEntity<Department> postDepartment(@RequestBody Department department){
+		return ResponseEntity.ok(departmentService.save(department));
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Department> putDepartment(@RequestBody Department department, @PathVariable Long id){
-		return ResponseEntity.ok(departmentService.update(department, id));
+	public ResponseEntity<Department> putDepartment(
+			@RequestBody Department department, 
+			@PathVariable Long id,
+			@RequestParam(name = "idUser") Long idUser){
+		return ResponseEntity.ok(departmentService.update(department, id, idUser));
 	}
 	
 	@DeleteMapping("/{id}")

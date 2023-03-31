@@ -29,8 +29,10 @@ public class AuthRunner implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		System.out.println("Run...");
-		//setRoleDefault();
-		//createAdmin();		
+		if(roleRepository.findAll().size() <= 0) setRoleDefault();
+		if(userRepository.findByUsername("admin").isEmpty()) createAdmin();	
+		if(userRepository.findByUsername("moderator").isEmpty()) createMODERATOR();		
+		if(userRepository.findByUsername("user").isEmpty()) createUser();		
 	}
 	
 	private void setRoleDefault() {
@@ -54,6 +56,26 @@ public class AuthRunner implements ApplicationRunner {
 				.username("admin")
 				.password("#Admin00#")
 				.roles(Set.of("ROLE_USER", "ROLE_ADMIN", "ROLE_MODERATOR"))
+				.build();
+		authService.register(newUser);
+	}
+	
+	private void createMODERATOR() {
+		RegisterDto newUser = RegisterDto.builder()
+				.email("moderator@moderator.moderator")
+				.username("moderator")
+				.password("#Admin00#")
+				.roles(Set.of("ROLE_USER", "ROLE_MODERATOR"))
+				.build();
+		authService.register(newUser);
+	}
+	
+	private void createUser() {
+		RegisterDto newUser = RegisterDto.builder()
+				.email("user@user.user")
+				.username("user")
+				.password("#Admin00#")
+				.roles(Set.of("ROLE_USER"))
 				.build();
 		authService.register(newUser);
 	}

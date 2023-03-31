@@ -25,11 +25,11 @@ public class Team {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
+	private Long id;
 	@Column(name = "team_code", nullable = false, unique = true)
-	public String teamCode;
+	private String teamCode;
 	@Column(name = "team_lead_id", nullable = false, unique = true)
-	private Long teamLead;
+	private Long teamLeadId;
 	
 	@ManyToOne
 	@JoinColumn(name = "section_id")
