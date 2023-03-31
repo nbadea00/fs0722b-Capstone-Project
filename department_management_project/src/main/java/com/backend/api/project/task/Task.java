@@ -28,8 +28,8 @@ public class Task {
 	private Long id;
 	@Column(name = "description")
 	private String taskDescription;
-	@Column(name = "employee_id")
-	private Long employeeId;
+	@Column(name = "user_id")
+	private Long userId;
 	@Column(name = "state")
 	private TaskState taskState;
 	

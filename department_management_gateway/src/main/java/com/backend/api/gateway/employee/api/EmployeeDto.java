@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Set;
 
 import lombok.Data;
+
 @Data
 public class EmployeeDto {
 
@@ -11,8 +12,8 @@ public class EmployeeDto {
 	private String firstname;
 	private String lastname;
 	private String telephone;
-	private Date birthday;
 	private Long idCredentials;
+	private Date birthday;
 	private Set<CompanyRoleDto> companyRoles;
 	private Set<SkillDto> skills;
 }
