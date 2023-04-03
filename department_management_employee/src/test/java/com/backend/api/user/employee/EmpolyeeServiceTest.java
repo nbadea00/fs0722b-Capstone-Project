@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import com.backend.api.user.employee.Employee;
-import com.backend.api.user.employee.EmployeeService;
 import com.backend.api.user.role.ERole;
 import com.backend.api.user.role.Role;
 import com.backend.api.user.skill.ESkill;
