@@ -1,5 +1,7 @@
 package com.backend.api.structure.section;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +24,18 @@ public class SectionController {
 	@Autowired SectionService sectionService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Section>> getAllSection(
+	public ResponseEntity<List<Section>> getAllSection(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "5") int dim){
 		return ResponseEntity.ok(sectionService.findAll(page, dim));
+	}
+	
+	@GetMapping("/findByDepartmentId")
+	public ResponseEntity<List<Section>> getAllSectionByDepartmentId(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "dim", defaultValue = "5") int dim,
+			@RequestParam(name = "departmentId") Long departmentId){
+		return ResponseEntity.ok(sectionService.findByDepartmentId(departmentId, page, dim));
 	}
 	
 	@GetMapping("/{id}")

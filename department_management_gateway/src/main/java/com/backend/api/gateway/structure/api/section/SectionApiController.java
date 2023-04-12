@@ -1,5 +1,7 @@
 package com.backend.api.gateway.structure.api.section;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +42,24 @@ public class SectionApiController {
 	
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Page<SectionDto>> getAllSectiona(
+	public ResponseEntity<List<SectionDto>> getAllSectiona(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "5") int dim){
 		return ResponseEntity.ok(
 				sectionApiService
 				.getAllSection(page, dim));
+				
+	}
+	
+	@GetMapping("/findByDepartmentId")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<List<SectionDto>> getAllSectiona(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "dim", defaultValue = "5") int dim,
+			@RequestParam(name = "departmentId") Long departmentId){
+		return ResponseEntity.ok(
+				sectionApiService
+				.getAllSectionByDepartmentId(page, dim, departmentId));
 				
 	}
 	

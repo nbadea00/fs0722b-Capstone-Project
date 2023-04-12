@@ -1,7 +1,8 @@
 package com.backend.api.structure.department;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,7 +23,7 @@ public class DepartmentController {
 	@Autowired DepartmentService departmentService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Department>> getAllDepartment(
+	public ResponseEntity<List<Department>> getAllDepartment(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "0") int dim){
 		return ResponseEntity.ok(departmentService.findAll(page, dim));

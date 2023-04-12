@@ -1,5 +1,7 @@
 package com.backend.api.structure.section;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,16 +47,16 @@ public class SectionService {
 		return repo.findByName(name).orElseThrow(()-> new ResourceNotFoundException("Section", "name", name));
 	}
 	
-	public Page<Section> findByDepartmentId(Long  departmentId, int page, int dim) {
-		return repo.findByDepartmentId(PageRequest.of(page, dim),departmentId);
+	public List<Section> findByDepartmentId(Long  departmentId, int page, int dim) {
+		return repo.findByDepartmentId(PageRequest.of(page, dim),departmentId).toList();
 	}
 	
 	public Section findBySectionManagerId(Long sectionManagerId) {
 		return repo.findBySectionManagerId(sectionManagerId).orElseThrow(()-> new ResourceNotFoundException("Section", "sectionManagerId", sectionManagerId.toString()));
 	}
 	
-	public Page<Section> findAll(int page, int dim) {
-		return repo.findAll(PageRequest.of(page, dim));
+	public List<Section> findAll(int page, int dim) {
+		return repo.findAll(PageRequest.of(page, dim)).toList();
 	}
 	
 	public String deleteById(Long id) {

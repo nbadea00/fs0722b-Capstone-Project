@@ -1,5 +1,7 @@
 package com.backend.api.gateway.structure.api.section;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -46,14 +48,25 @@ public class SectionApiService {
 				.block();
 	}
 	
-	public Page<SectionDto> getAllSection(int page, int dim) {
+	public List<SectionDto> getAllSection(int page, int dim) {
 		return webClientService
 				.errorHandleResponse(
 					webClientSectionsApi
 					.get()
 					.uri("?page=" + page + "&dim=" + dim)
 					.retrieve())
-				.bodyToMono(new ParameterizedTypeReference<Page<SectionDto>>() {})
+				.bodyToMono(new ParameterizedTypeReference<List<SectionDto>>() {})
+				.block();		
+	}
+	
+	public List<SectionDto> getAllSectionByDepartmentId(int page, int dim, Long departmentId) {
+		return webClientService
+				.errorHandleResponse(
+					webClientSectionsApi
+					.get()
+					.uri("/findByDepartmentId?page=" + page + "&dim=" + dim + "&departmentId=" + departmentId)
+					.retrieve())
+				.bodyToMono(new ParameterizedTypeReference<List<SectionDto>>() {})
 				.block();		
 	}
 	

@@ -31,8 +31,8 @@ public class AuthRunner implements ApplicationRunner {
 		System.out.println("Run...");
 		if(roleRepository.findAll().size() <= 0) setRoleDefault();
 		if(userRepository.findByUsername("admin").isEmpty()) createAdmin();	
-		if(userRepository.findByUsername("moderator").isEmpty()) createMODERATOR();		
-		if(userRepository.findByUsername("user").isEmpty()) createUser();		
+		if(userRepository.findByUsername("moderator1").isEmpty()) for(int i = 0; i < 5; i ++) createMODERATOR(i+1);		
+		if(userRepository.findByUsername("user1").isEmpty()) for(int i = 0; i < 14; i++) createUser(i+1);		
 	}
 	
 	private void setRoleDefault() {
@@ -60,20 +60,20 @@ public class AuthRunner implements ApplicationRunner {
 		authService.register(newUser);
 	}
 	
-	private void createMODERATOR() {
+	private void createMODERATOR(int num) {
 		RegisterDto newUser = RegisterDto.builder()
-				.email("moderator@moderator.moderator")
-				.username("moderator")
+				.email("moderator" + num + "@moderator.moderator")
+				.username("moderator" + num)
 				.password("#Admin00#")
 				.roles(Set.of("ROLE_USER", "ROLE_MODERATOR"))
 				.build();
 		authService.register(newUser);
 	}
 	
-	private void createUser() {
+	private void createUser(int num) {
 		RegisterDto newUser = RegisterDto.builder()
-				.email("user@user.user")
-				.username("user")
+				.email("user" + num + "@user.user")
+				.username("user" + num)
 				.password("#Admin00#")
 				.roles(Set.of("ROLE_USER"))
 				.build();

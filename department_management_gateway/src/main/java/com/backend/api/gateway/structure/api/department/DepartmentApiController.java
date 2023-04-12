@@ -1,5 +1,7 @@
 package com.backend.api.gateway.structure.api.department;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,7 @@ public class DepartmentApiController {
 	
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Page<DepartmentDto>> getAllDepartments(
+	public ResponseEntity<List<DepartmentDto>> getAllDepartments(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "5") int dim){
 		return ResponseEntity.ok(

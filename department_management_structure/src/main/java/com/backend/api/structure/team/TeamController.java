@@ -1,5 +1,7 @@
 package com.backend.api.structure.team;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +24,18 @@ public class TeamController {
 	@Autowired TeamService teamService;
 	
 	@GetMapping
-	public ResponseEntity<Page<Team>> getAllTeam(
+	public ResponseEntity<List<Team>> getAllTeam(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "0") int dim){
 		return ResponseEntity.ok(teamService.findAll(page, dim));
+	}
+	
+	@GetMapping("/findBySectionId")
+	public ResponseEntity<List<Team>> getAllTeamBySectionId(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "dim", defaultValue = "0") int dim,
+			@RequestParam(name = "sectionId") Long sectionId){
+		return ResponseEntity.ok(teamService.findBySectionId(sectionId, page, dim));
 	}
 	
 	@GetMapping("/{id}")

@@ -18,6 +18,7 @@ import com.backend.api.gateway.auth.service.AuthService;
 @RequestMapping("/api/auth")
 public class AuthController {
 
+	
     private AuthService authService;
 
     public AuthController(AuthService authService) {

@@ -1,7 +1,8 @@
 package com.backend.api.structure.department;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -48,8 +49,8 @@ public class DepartmentService {
 				.orElseThrow(()-> new ResourceNotFoundException("Department", "departmentHeadId", departmentHeadId.toString()));
 	}
 	
-	public Page<Department> findAll(int page, int dim) {
-		return repo.findAll(PageRequest.of(page, dim));
+	public List<Department> findAll(int page, int dim) {
+		return repo.findAll(PageRequest.of(page, dim)).toList();
 	}
 	
 	public String deleteById(Long id) {

@@ -1,5 +1,8 @@
 package com.backend.api.gateway.employee.api;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +30,7 @@ public class EmployeeApiController {
 
 	@PostMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> postNewEmployee(
+	public ResponseEntity<EmployeeDto> postNewEmployee(
 			@RequestBody EmployeeDto employee,
 			@RequestHeader(value = "Authorization") String token){
 		return ResponseEntity.ok(
@@ -57,12 +60,23 @@ public class EmployeeApiController {
 	
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Page<EmployeeDto>> getAllEmployee(
+	public ResponseEntity<List<EmployeeDto>> getAllEmployee(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "5") int dim){
 		return ResponseEntity.ok(
 				employeeApiService
 				.getAllEmployee(page, dim));
+	}
+	
+	@PostMapping("/findBySetIdCredentials")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<List<EmployeeDto>> getAllEmployeeSet(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "dim", defaultValue = "5") int dim,
+			@RequestBody Set<Long> idCredentials){
+		return ResponseEntity.ok(
+				employeeApiService
+				.getEmployeesBySetIdCredentials(page, dim, idCredentials));
 	}
 	
 	@GetMapping("/{id}")

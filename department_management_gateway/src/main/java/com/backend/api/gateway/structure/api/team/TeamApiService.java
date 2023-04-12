@@ -1,5 +1,7 @@
 package com.backend.api.gateway.structure.api.team;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -45,14 +47,25 @@ public class TeamApiService {
 				.block();
 	}
 	
-	public Page<TeamDto> getAllTeam(int page, int dim) {
+	public List<TeamDto> getAllTeam(int page, int dim) {
 		return webClientService
 				.errorHandleResponse(
 					webClientTeamsApi
 					.get()
 					.uri("?page=" + page + "&dim=" + dim)
 					.retrieve())
-				.bodyToMono(new ParameterizedTypeReference<Page<TeamDto>>() {})
+				.bodyToMono(new ParameterizedTypeReference<List<TeamDto>>() {})
+				.block();		
+	}
+	
+	public List<TeamDto> getAllTeamBySectionId(int page, int dim, Long sectionId) {
+		return webClientService
+				.errorHandleResponse(
+					webClientTeamsApi
+					.get()
+					.uri("/findBySectionId?page=" + page + "&dim=" + dim+ "&sectionId=" + sectionId)
+					.retrieve())
+				.bodyToMono(new ParameterizedTypeReference<List<TeamDto>>() {})
 				.block();		
 	}
 	

@@ -1,5 +1,7 @@
 package com.backend.api.gateway.structure.api.department;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -46,13 +48,13 @@ public class DepartmentApiService {
 				.block();
 	}
 	
-	public Page<DepartmentDto> getAllDepartment(int page, int dim) {
+	public List<DepartmentDto> getAllDepartment(int page, int dim) {
 		return webClientService
 				.errorHandleResponse(
 						webClientDepartmentsApi.get()
 						.uri("?page=" + page + "&dim=" + dim)
 						.retrieve())
-				.bodyToMono(new ParameterizedTypeReference<Page<DepartmentDto>>() {})
+				.bodyToMono(new ParameterizedTypeReference<List<DepartmentDto>>() {})
 				.block();		
 	}
 	

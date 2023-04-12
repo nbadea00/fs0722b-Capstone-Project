@@ -1,5 +1,8 @@
 package com.backend.api.user.employee;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +27,18 @@ public class EmployeeController {
 	@Autowired EmployeeService es;
 	
 	@GetMapping
-	public ResponseEntity<Page<Employee>> getAllUser(
+	public ResponseEntity<List<Employee>> getAllUser(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "5") int dim){
 		return ResponseEntity.ok(es.findAll(page, dim));
+	}
+	
+	@PostMapping("/findBySetIdCredentials")
+	public ResponseEntity<List<Employee>> getAllUser(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "dim", defaultValue = "5") int dim,
+			@RequestBody Set<Long> idCredentials){
+		return ResponseEntity.ok(es.findByIdCredentialsSet(page, dim, idCredentials));
 	}
 	
 	@GetMapping("/{id}")

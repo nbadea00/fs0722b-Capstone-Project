@@ -1,5 +1,7 @@
 package com.backend.api.structure.team;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,16 +48,16 @@ public class TeamService {
 		return repo.findByTeamCode(teamCode).orElseThrow(()-> new ResourceNotFoundException("Team", "teamCode", teamCode));
 	}
 	
-	public Page<Team> findBySectionId(Long sectionId, int page, int dim) {
-		return repo.findBySectionId(PageRequest.of(page, dim), sectionId);
+	public List<Team> findBySectionId(Long sectionId, int page, int dim) {
+		return repo.findBySectionId(PageRequest.of(page, dim), sectionId).toList();
 	}
 	
 	public Team findByTeamLeadId(Long teamLeadId) {
 		return repo.findByTeamLeadId(teamLeadId).orElseThrow(()-> new ResourceNotFoundException("Team", "TeamManagerId", teamLeadId.toString()));
 	}
 	
-	public Page<Team> findAll(int page, int dim) {
-		return repo.findAll(PageRequest.of(page, dim));
+	public List<Team> findAll(int page, int dim) {
+		return repo.findAll(PageRequest.of(page, dim)).toList();
 	}
 	
 	public String deleteById(Long id) {

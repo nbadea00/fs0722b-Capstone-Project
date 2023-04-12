@@ -1,9 +1,9 @@
 package com.backend.api.user.employee;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -56,14 +56,22 @@ public class EmployeeService {
 		return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id",  id));
 	}
 	
+	public Employee findByIdCredentials(Long idCredentials) {
+		return repo.findByIdCredentials(idCredentials).orElseThrow(() -> new ResourceNotFoundException("Employee", "idCredentials",  idCredentials));
+	}
+	
+	public List<Employee> findByIdCredentialsSet(int page, int dim, Set<Long> idCredentials) {
+		return repo.findSomeByIdCredentialsSet(PageRequest.of(page, dim), idCredentials).toList();
+	}
+	
 	public String delById(Long id) {
 		repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id",  id));
 		repo.deleteById(id);
 		return "Employee remuved";
 	}
 	
-	public Page<Employee> findAll(int page, int dim) {
-		return repo.findAll(PageRequest.of(page, dim));
+	public List<Employee> findAll(int page, int dim) {
+		return repo.findAll(PageRequest.of(page, dim)).toList();
 	}
 	
 	public Boolean getAuth(Long id, ERole auth) {

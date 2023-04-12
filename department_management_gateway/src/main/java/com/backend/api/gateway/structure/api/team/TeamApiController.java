@@ -1,5 +1,7 @@
 package com.backend.api.gateway.structure.api.team;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -39,12 +41,24 @@ public class TeamApiController {
 	
 	@GetMapping
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<Page<TeamDto>> getAllTeama(
+	public ResponseEntity<List<TeamDto>> getAllTeam(
 			@RequestParam(name = "page", defaultValue = "0") int page,
 			@RequestParam(name = "dim", defaultValue = "5") int dim){
 		return ResponseEntity.ok(
 				teamApiService
 				.getAllTeam(page, dim));
+				
+	}
+	
+	@GetMapping("/findBySectionId")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<List<TeamDto>> getAllTeamBySecrionId(
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "dim", defaultValue = "5") int dim,
+			@RequestParam(name = "sectionId") Long sectionId){
+		return ResponseEntity.ok(
+				teamApiService
+				.getAllTeamBySectionId(page, dim, sectionId));
 				
 	}
 	

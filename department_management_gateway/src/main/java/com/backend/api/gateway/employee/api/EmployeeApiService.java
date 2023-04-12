@@ -1,10 +1,16 @@
 package com.backend.api.gateway.employee.api;
 
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestBodySpec;
 
 import com.backend.api.gateway.webclient.WebClientService;
 
@@ -51,14 +57,26 @@ public class EmployeeApiService {
 				.block();
 	}
 	
-	public Page<EmployeeDto> getAllEmployee(int page, int dim) {
+	public List<EmployeeDto> getAllEmployee(int page, int dim) {
 		return webClientService
 				.errorHandleResponse(
 						webClientEmployeeApi
 						.get()
 						.uri("?page=" + page + "&dim=" + dim)
 						.retrieve())
-				.bodyToMono(new ParameterizedTypeReference<Page<EmployeeDto>>() {})
+				.bodyToMono(new ParameterizedTypeReference<List<EmployeeDto>>() {})
+				.block();
+	}
+	
+	public List<EmployeeDto> getEmployeesBySetIdCredentials(int page, int dim, Set<Long> idCredentials) {
+		return webClientService
+				.errorHandleResponse(
+						((RequestBodySpec) webClientEmployeeApi
+						.post()
+						.uri("/findBySetIdCredentials?page=" + page + "&dim=" + dim))
+						.body(Mono.just(idCredentials), new ParameterizedTypeReference<Set<Long>>() {})
+						.retrieve())
+				.bodyToMono(new ParameterizedTypeReference<List<EmployeeDto>>() {})
 				.block();
 	}
 	
