@@ -1,0 +1,8 @@
+<mat-grid-list cols="24" rowHeight="200px">
+  <mat-grid-tile [colspan]="12" [rowspan]="1" [style.background]="'red'">
+    Info
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="12" [rowspan]="2" [style.background]="'red'">
+    <ng-container [ngTemplateOutlet]="tableTemplate"></ng-container>
+  </mat-grid-tile>
+</mat-grid-list>

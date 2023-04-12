@@ -1,0 +1,9 @@
+<section>
+  <h2 *ngIf="section">Section: {{ section.name }}</h2>
+  <app-table
+    *ngIf="teams && teams[0].teamLead"
+    [elements]="teams"
+    [type]="'team'"
+    [keys]="['id', 'teamCode', 'teamLead']"
+  ></app-table>
+</section>

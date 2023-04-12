@@ -1,0 +1,48 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>username</mat-label>
+    <input formControlName="username" matInput />
+    <mat-error *ngIf="getFormControl('username')?.invalid && getFormControl('username')?.touched">
+      <span *ngIf="getErrorsControl('username', 'required')">
+        Username is <strong>required</strong>
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="email" placeholder="Ex. pat@example.com">
+    <mat-error *ngIf="getFormControl('email')?.invalid && getFormControl('email')?.touched">
+      <span *ngIf="getErrorsControl('email', 'email')">
+        Please enter a valid email address
+      </span>
+      <span *ngIf="getErrorsControl('email', 'required')">
+        Email is <strong>required</strong>
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>password</mat-label>
+    <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" />
+    <button
+      mat-icon-button
+      matSuffix
+      (click)="hide = !hide"
+      [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hide"
+    >
+      <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+    </button>
+    <mat-error *ngIf="getFormControl('password')?.invalid && getFormControl('password')?.touched">
+      <span *ngIf="getErrorsControl('password', 'required')">
+        Password is <strong>required</strong>
+      </span>
+      <span *ngIf="getErrorsControl('password', 'pattern')">
+        Please enter a valid password address
+      </span>
+    </mat-error>
+  </mat-form-field>
+
+  <button type="submit" [disabled]="!signupForm.valid" mat-button color="accent">Accent</button>
+</form>

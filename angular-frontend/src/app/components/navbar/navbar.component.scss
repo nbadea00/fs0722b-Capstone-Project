@@ -1,0 +1,16 @@
+nav{
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  background-color: #3d3d3d;
+  color: #FFF;
+  ul{
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    li{
+      cursor: pointer;
+    }
+  }
+}

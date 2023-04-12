@@ -1,0 +1,13 @@
+<section>
+  <h2 *ngIf="department">Department: {{ department.name }}</h2>
+  <app-grid-sistem [element]="department" [tableTemplate]="tableSections"></app-grid-sistem>
+
+    <ng-template #tableSections>
+      <app-table
+      *ngIf="sections && sections[0].sectionManager"
+      [elements]="sections"
+      [type]="'section'"
+      [keys]="['id', 'name', 'sectionManager']"
+      ></app-table>
+    </ng-template>
+</section>
