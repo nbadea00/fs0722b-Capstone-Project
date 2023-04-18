@@ -14,4 +14,8 @@ export class EmployeeService {
   public getUserInfo(temaLeadList: number[]): Observable<User[]>{
     return this.http.post<User[]>(`${environment.URL}/employees/findBySetIdCredentials`, temaLeadList);
   }
+
+  public getUserInfoByToken(): Observable<User>{
+    return this.http.get<User>(`${environment.URL}/employees/token`);
+  }
 }

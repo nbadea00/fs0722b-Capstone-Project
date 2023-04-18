@@ -1,0 +1,43 @@
+<div class="container">
+  <form class="example-form">
+
+    <div>
+      <button mat-raised-button type="button" (click)="edit = !edit" class="demo-button blue">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Firstname</mat-label>
+      <input [disabled]="edit" matInput value="Sushi" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Lastname</mat-label>
+      <input [disabled]="edit" matInput value="Sushi" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Telephone</mat-label>
+      <input [disabled]="edit" matInput value="Sushi" />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Birthday</mat-label>
+      <input [disabled]="edit" matInput type="date" />
+    </mat-form-field>
+
+    <section class="skills">
+      <mat-button-toggle-group [disabled]="edit" name="skill-1" aria-label="Ingredients" multiple>
+        <mat-button-toggle value="JAVA" checked="false">Java</mat-button-toggle>
+        <mat-button-toggle value="JAVASCRIPT">JavaScript</mat-button-toggle>
+        <mat-button-toggle value="ANGULAR">Angular</mat-button-toggle>
+      </mat-button-toggle-group>
+      <mat-button-toggle-group [disabled]="edit" name="skill-2" aria-label="Ingredients" multiple>
+        <mat-button-toggle value="JUNIT">Junit</mat-button-toggle>
+        <mat-button-toggle value="HTML">HTML</mat-button-toggle>
+        <mat-button-toggle value="CSS">CSS</mat-button-toggle>
+      </mat-button-toggle-group>
+    </section>
+  </form>
+</div>

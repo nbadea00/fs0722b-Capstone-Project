@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
 type DataTabel = {
-  id:number;
+  id: number;
   name:string;
   lead:string;
 }
@@ -16,15 +17,16 @@ type DataTabel = {
 })
 export class TableComponent implements OnInit, AfterViewInit  {
   dataSource!: MatTableDataSource<DataTabel>;
-  displayedColumns: string[] = ['id', 'name', 'lead'];
+  displayedColumns: string[] = ['select', 'name', 'lead'];
+  dataTabelProps: string[] = ['name', 'lead']
+  selection = new SelectionModel<DataTabel>(true, [])
   @Input() type!: string;
   @Input() keys!: string[];
   @Input() elements!: any[];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  isLoadingResults = true;
-  isRateLimitReached = false;
+  @Output() event: EventEmitter<number[]> = new EventEmitter();
 
   constructor() { }
   ngAfterViewInit(): void {
@@ -42,6 +44,15 @@ export class TableComponent implements OnInit, AfterViewInit  {
     }
   }
 
+  addData(){
+
+  }
+
+  removeData(){
+    let numberArray: number[] = this.selection.selected.map(e => e.id);
+    this.event.emit(numberArray)
+  }
+
   ngOnInit(): void {
     let args = this.elements.map( e =>  {
       return {
@@ -51,6 +62,28 @@ export class TableComponent implements OnInit, AfterViewInit  {
       }
     });
     this.dataSource = new MatTableDataSource(args);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
+  }
+
+  checkboxLabel(row?: DataTabel): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row}`;
   }
 
 }

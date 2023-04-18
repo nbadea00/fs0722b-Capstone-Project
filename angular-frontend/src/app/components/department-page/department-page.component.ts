@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription, filter, map, switchMap, tap } from 'rxjs';
 import { AuthDto } from 'src/app/auth/interface/auth-dto.interface';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { Department } from 'src/app/interface/department.interface';
@@ -40,31 +40,31 @@ export class DepartmentPageComponent implements OnInit {
           return this.ds.getDepartmentById(Number(params.get('id')));
         })
       )
-      .subscribe((section) => {
-        this.department = section;
+      .subscribe((department) => {
+        this.department = department;
         this.subSec = this.sectionService
           .getSectionsByDepartmentId(this.department.id)
           .subscribe((sections) => {
             this.sections = sections;
-            let arr: number[] = [];
-            this.sections.forEach((section) =>
-              arr.push(section.sectionManagerId)
-            );
-            this.subSectionManager = this.employeeService
-              .getUserInfo(arr)
-              .subscribe((user) => {
-                for (let i = 0; i < this.sections.length; i++) {
-                  this.sections[i].sectionManager = user[i];
-                }
-              });
           });
       });
+  }
+
+  removeSections(event:number[]){
+    console.log(event)
+  }
+
+  getKeys(): string[] {
+    return Object.keys(this.department);
+  }
+
+  getKeysLead(){
+    return Object.keys(this.department.departmentHead)
   }
 
   ngOnDestroy(): void {
     this.subDep.unsubscribe();
     this.subAuth.unsubscribe();
     this.subSec.unsubscribe();
-    this.subSectionManager.unsubscribe();
   }
 }

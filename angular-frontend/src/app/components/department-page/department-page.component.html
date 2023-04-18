@@ -1,13 +1,14 @@
-<section>
-  <h2 *ngIf="department">Department: {{ department.name }}</h2>
-  <app-grid-sistem [element]="department" [tableTemplate]="tableSections"></app-grid-sistem>
-
-    <ng-template #tableSections>
-      <app-table
-      *ngIf="sections && sections[0].sectionManager"
-      [elements]="sections"
-      [type]="'section'"
-      [keys]="['id', 'name', 'sectionManager']"
-      ></app-table>
-    </ng-template>
+<section *ngIf="department && department.departmentHead">
+  <h2>Department: {{ department.name }}</h2>
+  <mat-card>
+    <mat-card-header><mat-card-title>Department Head</mat-card-title></mat-card-header>
+    <mat-card-content>{{department.departmentHead.firstname}} {{department.departmentHead.lastname}}</mat-card-content>
+  </mat-card>
+  <app-table
+    *ngIf="sections && sections[0].sectionManager"
+    [elements]="sections"
+    [type]="'section'"
+    [keys]="['id', 'name', 'sectionManager']"
+    (event)="removeSections($event)"
+  ></app-table>
 </section>

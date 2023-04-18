@@ -81,10 +81,18 @@ public class EmployeeApiController {
 	
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('ROLE_USER')")
-	public ResponseEntity<?> getEmployeeById(@PathVariable Long id){
+	public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Long id){
 		return ResponseEntity.ok(
 				employeeApiService
 				.getEmployeeById(id));
+	}
+	
+	@GetMapping("/token")
+	@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<EmployeeDto> getEmployeeByToken(@RequestHeader(value = "Authorization") String token){
+		return ResponseEntity.ok(
+				employeeApiService
+				.getEmployeeById(Long.parseLong(jwtTokenProvider.getId(token.substring(7)))));
 	}
 	
 	@DeleteMapping("/{id}")

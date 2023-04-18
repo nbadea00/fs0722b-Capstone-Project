@@ -1,9 +1,14 @@
 <section>
   <h2 *ngIf="section">Section: {{ section.name }}</h2>
+  <mat-card>
+    <mat-card-header><mat-card-title>Section Manager</mat-card-title></mat-card-header>
+    <mat-card-content>{{section.sectionManager.firstname}} {{section.sectionManager.lastname}}</mat-card-content>
+  </mat-card>
   <app-table
     *ngIf="teams && teams[0].teamLead"
     [elements]="teams"
     [type]="'team'"
     [keys]="['id', 'teamCode', 'teamLead']"
+    (event)="removeTeams($event)"
   ></app-table>
 </section>

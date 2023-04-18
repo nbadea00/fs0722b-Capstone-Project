@@ -27,7 +27,10 @@ import {MatInputModule} from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import {MatCommonModule} from '@angular/material/core';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { GridSistemComponent } from './components/grid-sistem/grid-sistem.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ import { GridSistemComponent } from './components/grid-sistem/grid-sistem.compon
     SectionPageComponent,
     DepartmentPageComponent,
     TableComponent,
-    GridSistemComponent
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,10 @@ import { GridSistemComponent } from './components/grid-sistem/grid-sistem.compon
     MatFormFieldModule,
     MatInputModule,
     MatSortModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule,
+    MatMenuModule,
+    MatButtonToggleModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

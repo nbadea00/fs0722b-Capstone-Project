@@ -1,47 +1,92 @@
+<div class="demo-button-container">
+  <button mat-raised-button (click)="addData()" class="demo-button add">
+    <mat-icon>add</mat-icon>
+  </button>
+  <button
+    mat-raised-button
+    [disabled]="!elements.length"
+    (click)="removeData()"
+    class="demo-button delete"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
+
 <mat-form-field appearance="fill">
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)" #input />
   <button
-  *ngIf="input.value"
-  matSuffix
-  mat-icon-button
-  (click)="input.value = ''; applyFilter($event)"
+    *ngIf="input.value"
+    matSuffix
+    mat-icon-button
+    (click)="input.value = ''; applyFilter($event)"
   >
-  <mat-icon>close</mat-icon>
-</button>
+    <mat-icon>close</mat-icon>
+  </button>
 </mat-form-field>
 
-<div class="mat-elevation-z8">
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    matSort
-    class="mat-elevation-z8 demo-table"
-  >
-    <ng-container *ngFor="let arg of displayedColumns" [matColumnDef]="arg">
-      <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>{{ arg }}</mat-header-cell>
-      <mat-cell mat-cell *matCellDef="let row">{{ row[arg] }}</mat-cell>
-    </ng-container>
+<section class="mat-elevation-z8">
+  <div class="container">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8 demo-table"
+    >
+      <ng-container *ngFor="let arg of dataTabelProps" [matColumnDef]="arg">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>{{
+          arg
+        }}</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let row">{{ row[arg] }}</mat-cell>
+      </ng-container>
 
-    <mat-header-row mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row
-      class="clickable"
-      mat-row
-      [routerLink]="[type + '/' + row.id]"
-      *matRowDef="let row; columns: displayedColumns"
-    ></mat-row>
+      <ng-container matColumnDef="select" sticky>
+        <mat-header-cell mat-header-cell *matHeaderCellDef class="checkbox">
+          <mat-checkbox
+            (change)="$event ? toggleAllRows() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let row" class="checkbox">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
 
-    <!-- Row shown when there is no matching data. -->
-    <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">
-        No data matching the filter "{{ input.value }}"
-      </td>
-    </tr>
-  </table>
+      <mat-header-row
+        mat-header-row
+        *matHeaderRowDef="displayedColumns"
+      ></mat-header-row>
+      <mat-row
+        class="clickable"
+        mat-row
+        [routerLink]="[type + '/' + row.id]"
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="selection.toggle(row)"
+      ></mat-row>
 
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+          No data matching the filter "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  </div>
   <mat-paginator
     [pageSizeOptions]="[5, 10]"
-    showFirstLastButtons
+    pageSize="5"
+    [length]="elements.length"
+    showFirstLastButtons="false"
     aria-label="Select page"
+    sticky
   ></mat-paginator>
-</div>
+</section>

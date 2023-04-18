@@ -60,6 +60,10 @@ export class SectionPageComponent implements OnInit {
       });
   }
 
+  removeTeams(event: number[]):void {
+    console.log(event);
+  }
+
   ngOnDestroy(): void {
     this.subSec.unsubscribe();
     this.subTeam.unsubscribe();

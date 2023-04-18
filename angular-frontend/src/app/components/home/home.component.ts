@@ -29,23 +29,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subAuth = this.as.user$.subscribe((user) => (this.user = user!));
     this.subDep = this.ds.getDepartments().subscribe((departments) => {
       this.departments = departments;
-      let arr: number[] = [];
-      this.departments.forEach((department) =>
-        arr.push(department.departmentHeadId)
-      );
-      this.subDepartmentHead = this.employeeService
-        .getUserInfo(arr)
-        .subscribe((user) => {
-          for (let i = 0; i < this.departments.length; i++) {
-            this.departments[i].departmentHead = user[i];
-          }
-        });
+      console.log(departments)
     });
+  }
+
+  removeDepartments(event:number[]){
+    console.log(event)
   }
 
   ngOnDestroy(): void {
     this.subAuth.unsubscribe();
-    this.subDepartmentHead.unsubscribe();
     this.subDep.unsubscribe();
   }
 }

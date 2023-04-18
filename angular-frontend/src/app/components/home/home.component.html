@@ -6,6 +6,7 @@
       [elements]="departments"
       [type]="'department'"
       [keys]="['id', 'name', 'departmentHead']"
+      (event)="removeDepartments($event)"
     ></app-table>
   </section>
 </main>
