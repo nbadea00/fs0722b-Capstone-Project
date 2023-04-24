@@ -17,10 +17,12 @@ export class FlexLayoutService {
     [Breakpoints.Medium, 'md'],
     [Breakpoints.Large, 'ld'],
     [Breakpoints.XLarge, 'xl'],
+    [Breakpoints.TabletPortrait, 'tp'],
+    [Breakpoints.TabletLandscape, 'tl'],
   ]);
 currentScreenSize: string = 'default';
 
-arr : string[] = ['xs', 'sd', 'md', 'ld', 'xl'];
+arr : string[] = ['xs', 'sd', 'md', 'ld', 'xl', 'tl', 'tp'];
 
   constructor(private breakpointObserver: BreakpointObserver) {
     breakpointObserver
@@ -30,6 +32,8 @@ arr : string[] = ['xs', 'sd', 'md', 'ld', 'xl'];
         Breakpoints.Medium,
         Breakpoints.Large,
         Breakpoints.XLarge,
+        Breakpoints.TabletPortrait,
+        Breakpoints.TabletLandscape,
       ])
       .pipe(
         tap((result) => {
@@ -41,7 +45,7 @@ arr : string[] = ['xs', 'sd', 'md', 'ld', 'xl'];
       .subscribe();
   }
 
-  flex(args: Map<string, string>): string {
+  flex<T>(args: Map<string, T>): T {
     for(let i = this.arr.indexOf(this.currentScreenSize); i >= 0; i--) if(args.has(this.arr[i])) return args.get(this.arr[i])!;
     return args.get('default')!;
   }

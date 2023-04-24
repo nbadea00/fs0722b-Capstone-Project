@@ -45,8 +45,7 @@ export class AuthService {
 
   public signup(data: SingupDto) {
     return this.http
-      .post(`${environment.URL}/auth/signup`, data)
-      .pipe(catchError(async (err) => this.errors(err)));
+      .post(`${environment.URL}/auth/signup`, data);
   }
 
   restoreUser() {

@@ -1,0 +1,12 @@
+<section>
+  <app-table
+    *ngIf="elements && elements[0][keys[2]]"
+    [elements]="elements"
+    [type]="type"
+    [keys]="keys"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
+    (event)="removeTeams($event)"
+    (pageEvent)="pageEvent($event)"
+  ></app-table>
+</section>

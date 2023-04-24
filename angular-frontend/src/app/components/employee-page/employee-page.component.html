@@ -1,0 +1,11 @@
+<section>
+  <div *ngFor="let employee of employees">
+    <mat-card >
+      <mat-card-content>{{employee.firstname}} {{employee.lastname}}
+        <mat-chip-list>
+          <mat-chip *ngFor="let skill of employee.skills"> {{skill.skillName}} </mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</section>

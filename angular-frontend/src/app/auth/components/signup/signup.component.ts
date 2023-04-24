@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
+import { SingupDto } from '../../interface/singup-dto.interface';
 
 @Component({
   selector: 'app-signup',
@@ -45,6 +46,13 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if(this.signupForm.valid){
+      console.log('submit', this.signupForm.value);
+      let user: SingupDto = {
+        username: this.signupForm.value.username!,
+        password: this.signupForm.value.password!,
+        email: this.signupForm.value.email!
+      }
+      this.auth.signup(user).subscribe(data => console.log(data));
     }
   }
 

@@ -14,12 +14,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   toggleMenu = false;
 
-
   sub!: Subscription;
+  subUser!: Subscription;
   isloggedIn: boolean = false;
+  isAdmin: boolean = false;
   ngOnInit(): void {
     this.sub = this.auth.isLoggedIn$.subscribe(loggedIn => this.isloggedIn = loggedIn);
-    console.log()
+    this.subUser = this.auth.user$.subscribe(user => user?.rolesName.includes('ROLE_ADMIN')? this.isAdmin = true: this.isAdmin = false);
   }
 
   toggle(){
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+    this.subUser.unsubscribe();
   }
 
 }

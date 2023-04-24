@@ -31,6 +31,10 @@ import { ProfilePageComponent } from './components/profile-page/profile-page.com
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { TeamPageComponent } from './components/team-page/team-page.component';
+import { StructPageComponent } from './components/struct-page/struct-page.component';
+import { EmployeePageComponent } from './components/employee-page/employee-page.component';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,10 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     SectionPageComponent,
     DepartmentPageComponent,
     TableComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    TeamPageComponent,
+    StructPageComponent,
+    EmployeePageComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +71,8 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatProgressSpinnerModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatChipsModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

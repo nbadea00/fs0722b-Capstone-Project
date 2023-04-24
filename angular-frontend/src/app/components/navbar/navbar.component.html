@@ -1,4 +1,4 @@
-<nav [ngClass]="{'flex-nav': flexControler({'sd': true,'default': false})}">
+<nav [ngClass]="{ 'flex-nav': flexControler({ sd: true, default: false }) }">
   <div>
     <p>LOGO</p>
     <button mat-icon-button class="button-menu" (click)="toggle()">
@@ -6,39 +6,68 @@
     </button>
   </div>
 
-  <ul [ngClass]="{'menu-animation' : toggleMenu}">
+  <ul [ngClass]="{ 'menu-animation': toggleMenu }">
     <li
       [routerLink]="['/']"
       routerLinkActive="active"
+      *ngIf="isloggedIn"
       [routerLinkActiveOptions]="{ exact: true }"
     >
       Home
     </li>
+    <li *ngIf="isAdmin">
+      <span mat-button [matMenuTriggerFor]="belowMenu">Structure</span>
+      <mat-menu #belowMenu="matMenu" yPosition="below">
+        <span
+          mat-menu-item
+          [routerLink]="['/structure/departments']"
+          routerLinkActive="active"
+          *ngIf="isloggedIn"
+        >
+          Departments
+        </span>
+        <span
+          mat-menu-item
+          [routerLink]="['/structure/sections']"
+          routerLinkActive="active"
+          *ngIf="isloggedIn"
+        >
+          Sections
+        </span>
+        <span
+          mat-menu-item
+          [routerLink]="['/structure/teams']"
+          routerLinkActive="active"
+          *ngIf="isloggedIn"
+        >
+          Teams
+        </span>
+      </mat-menu>
+    </li>
+    <li
+      [routerLink]="['/employees']"
+      routerLinkActive="active"
+      *ngIf="isloggedIn"
+    >
+      Employee
+    </li>
     <li
       [routerLink]="['/profile']"
       routerLinkActive="active"
+      *ngIf="isloggedIn"
     >
       Profile
     </li>
-    <li
-      *ngIf="!isloggedIn"
-      [routerLink]="['/login']"
-      routerLinkActive="active"
-    >
-    login
+    <li *ngIf="!isloggedIn" [routerLink]="['/login']" routerLinkActive="active">
+      login
     </li>
-    <li
-      *ngIf="isloggedIn"
-      (click)="logout()"
-    >
-    logout
-    </li>
+    <li *ngIf="isloggedIn" (click)="logout()">logout</li>
     <li
       *ngIf="!isloggedIn"
       [routerLink]="['/signup']"
       routerLinkActive="active"
     >
-    signup
+      signup
     </li>
   </ul>
 </nav>

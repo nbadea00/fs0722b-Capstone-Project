@@ -1,7 +1,9 @@
 package com.backend.api.gateway.auth.service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,7 @@ import com.backend.api.gateway.auth.entity.ERole;
 import com.backend.api.gateway.auth.entity.Role;
 import com.backend.api.gateway.auth.entity.User;
 import com.backend.api.gateway.auth.exception.MyAPIException;
+import com.backend.api.gateway.auth.payload.JWTAuthResponse;
 import com.backend.api.gateway.auth.payload.LoginDto;
 import com.backend.api.gateway.auth.payload.RegisterDto;
 import com.backend.api.gateway.auth.repository.RoleRepository;
@@ -45,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public JWTAuthResponse login(LoginDto loginDto) {
         
     	Authentication authentication = authenticationManager.authenticate(
         		new UsernamePasswordAuthenticationToken(
@@ -54,10 +57,17 @@ public class AuthServiceImpl implements AuthService {
         ); 
     	
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String token = jwtTokenProvider.generateToken(authentication);
+        
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setUsername(loginDto.getUsername());
+        jwtAuthResponse.setAccessToken(token);
+        
+        Optional<User> u = userRepository.findByUsernameOrEmail(loginDto.getUsername(), loginDto.getUsername());
+        
+        if(u.isPresent()) jwtAuthResponse.setRolesName(u.get().getRoles().stream().map(role -> role.getRoleName()).collect(Collectors.toSet()));
 
-        return token;
+        return jwtAuthResponse;
     }
 
     @Override
@@ -80,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
 
         Set<Role> roles = new HashSet<>();
         
-        if(registerDto.getRoles() != null) {
+        /*if(registerDto.getRoles() != null) {
 	        registerDto.getRoles().forEach(role -> {
 	        	Role userRole = roleRepository.findByRoleName(getRole(role)).get();
 	        	roles.add(userRole);
@@ -88,7 +98,10 @@ public class AuthServiceImpl implements AuthService {
         } else {
         	Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
         	roles.add(userRole);
-        }
+        }*/
+        
+        Role userRole = roleRepository.findByRoleName(ERole.ROLE_USER).get();
+    	roles.add(userRole);
         
         user.setRoles(roles);
         userRepository.save(user);

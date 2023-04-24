@@ -1,12 +1,14 @@
 <main>
   <h1 *ngIf="user">Benvenuto, {{ user.username }}</h1>
-  <section>
-    <app-table
+  <!--
+    <section>
+      <app-table
       *ngIf="departments && departments[0].departmentHead"
       [elements]="departments"
       [type]="'department'"
       [keys]="['id', 'name', 'departmentHead']"
       (event)="removeDepartments($event)"
-    ></app-table>
-  </section>
+      ></app-table>
+    </section>
+  -->
 </main>

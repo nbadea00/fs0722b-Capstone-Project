@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -17,16 +17,19 @@ type DataTabel = {
 })
 export class TableComponent implements OnInit, AfterViewInit  {
   dataSource!: MatTableDataSource<DataTabel>;
-  displayedColumns: string[] = ['select', 'name', 'lead'];
-  dataTabelProps: string[] = ['name', 'lead']
+  displayedColumns: string[] = ['select','id', 'name', 'lead'];
+  dataTabelProps: string[] = ['id','name', 'lead']
   selection = new SelectionModel<DataTabel>(true, [])
   @Input() type!: string;
   @Input() keys!: string[];
   @Input() elements!: any[];
+  @Input() pageSize: number = 5;
+  @Input() pageIndex: number = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   @Output() event: EventEmitter<number[]> = new EventEmitter();
+  @Output() pageEvent: EventEmitter<PageEvent> = new EventEmitter();
 
   constructor() { }
   ngAfterViewInit(): void {
@@ -50,10 +53,11 @@ export class TableComponent implements OnInit, AfterViewInit  {
 
   removeData(){
     let numberArray: number[] = this.selection.selected.map(e => e.id);
-    this.event.emit(numberArray)
+    this.event.emit(numberArray);
   }
 
   ngOnInit(): void {
+    console.log(this.elements)
     let args = this.elements.map( e =>  {
       return {
         id: e[this.keys[0]],
@@ -62,6 +66,10 @@ export class TableComponent implements OnInit, AfterViewInit  {
       }
     });
     this.dataSource = new MatTableDataSource(args);
+  }
+
+  pageEventEmiter(event:PageEvent){
+    this.pageEvent.emit(event);
   }
 
   isAllSelected() {

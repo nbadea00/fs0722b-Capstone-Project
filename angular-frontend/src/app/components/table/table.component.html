@@ -68,7 +68,7 @@
       <mat-row
         class="clickable"
         mat-row
-        [routerLink]="[type + '/' + row.id]"
+        [routerLink]="['/structure/' + type + 's/' + type + '/' + row.id]"
         *matRowDef="let row; columns: displayedColumns"
         (click)="selection.toggle(row)"
       ></mat-row>
@@ -83,10 +83,12 @@
   </div>
   <mat-paginator
     [pageSizeOptions]="[5, 10]"
-    pageSize="5"
+    [pageSize]="pageSize"
+    [pageIndex]="pageIndex"
     [length]="elements.length"
     showFirstLastButtons="false"
     aria-label="Select page"
     sticky
+    (page)="pageEventEmiter($event)"
   ></mat-paginator>
 </section>

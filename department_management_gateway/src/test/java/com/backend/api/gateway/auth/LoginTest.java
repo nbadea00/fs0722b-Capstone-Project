@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import com.backend.api.gateway.auth.payload.JWTAuthResponse;
 import com.backend.api.gateway.auth.payload.LoginDto;
 import com.backend.api.gateway.auth.service.AuthService;
 
@@ -29,9 +30,9 @@ public class LoginTest {
 				.password("#Admin00#")
 				.build();
 		
-		String token = authService.login(login);
+		JWTAuthResponse user = authService.login(login);
 		
-		assertTrue(token != null);
+		assertTrue(user != null);
 	}
 	
 	@Test
@@ -42,8 +43,8 @@ public class LoginTest {
 				.password("#Admin00#")
 				.build();
 		
-		String token = authService.login(login);
+		JWTAuthResponse user = authService.login(login);
 		
-		assertTrue(token != null);
+		assertTrue(user != null);
 	}
 }

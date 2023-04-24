@@ -1,0 +1,12 @@
+section {
+  padding: 15px 30px;
+  display: flex;
+  flex-wrap: wrap;
+  div {
+    min-width: 100%;
+    @media (min-width: 600px) {
+      min-width: 50%;
+    }
+    padding: 15px;
+  }
+}
